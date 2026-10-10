@@ -13,7 +13,7 @@ import {
 } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
-import yaml from 'js-yaml'
+import { dump, load } from 'js-yaml'
 
 const appimagetoolUrl =
   'https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage'
@@ -71,7 +71,7 @@ async function refreshUpdateMetadata(releaseDir, appImageName, sha512, size) {
 
   for (const file of yamlFiles) {
     const filePath = path.join(releaseDir, file)
-    const metadata = yaml.load(await readFile(filePath, 'utf8'))
+    const metadata = load(await readFile(filePath, 'utf8'))
     if (!metadata || typeof metadata !== 'object') continue
 
     let changed = false
@@ -94,7 +94,7 @@ async function refreshUpdateMetadata(releaseDir, appImageName, sha512, size) {
     }
 
     if (changed) {
-      await writeFile(filePath, yaml.dump(metadata))
+      await writeFile(filePath, dump(metadata))
       metadataUpdated = true
     }
   }
