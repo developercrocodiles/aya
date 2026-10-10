@@ -18,6 +18,7 @@
     "build:renderer": "vite build",
     "build": "zx script/build.mjs",
     "pack": "zx script/pack.mjs",
+    "pack:pacman": "zx script/pack.mjs --pacman",
     "repack:appimage": "node script/repack-appimage.mjs",
     "pack:mas-dev": "zx script/pack.mjs --mas-dev",
     "pack:mas": "zx script/pack.mjs --mas",

@@ -11,6 +11,8 @@ if (isMac && process.arch !== 'arm64') {
   publishChannel = '${productName}-latest-${arch}'
 }
 
+const args = process.argv.slice(2)
+
 const config = {
   appId: pkg.appId,
   directories: {
@@ -45,7 +47,7 @@ const config = {
     icon: 'build/icon.icns',
   },
   linux: {
-    target: ['AppImage', 'pacman'],
+    target: ['AppImage'],
   },
   publish: {
     provider: 'generic',
@@ -54,8 +56,16 @@ const config = {
   },
 }
 
+if (args.includes('--pacman')) {
+  config.linux.target = ['pacman']
+} else if (args.includes('--appimage')) {
+  config.linux.target = ['AppImage']
+} else if (args.includes('--linux')) {
+  const linuxTargets = process.argv.slice(process.argv.indexOf('--linux') + 1)
+  config.linux.target = linuxTargets.length ? linuxTargets : ['AppImage']
+}
+
 if (isMac) {
-  const args = process.argv.slice(2)
   const entitlements = {
     entitlements: 'build/entitlements.mas.plist',
     entitlementsInherit: 'build/entitlements.mas.inherit.plist',
