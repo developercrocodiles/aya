@@ -24,6 +24,8 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     - uses: android-actions/setup-android@v3
+      with:
+        accept-android-sdk-licenses: true
     - if: startsWith(matrix.os, 'ubuntu')
       run: |
         sudo apt-get install --no-install-recommends -y icnsutils graphicsmagick squashfs-tools xz-utils
