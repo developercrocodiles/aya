@@ -117,7 +117,7 @@ class Connection(private val client: LocalSocket) : Thread() {
         info.put("lastUpdateTime", packageInfo.lastUpdateTime)
         info.put("signatures", getSignatures(packageInfo))
 
-        val applicationInfo = packageInfo.applicationInfo
+        val applicationInfo = packageInfo.applicationInfo ?: return info
         var apkSize = 0L
         val apkPath = applicationInfo.sourceDir
         apkSize = File(apkPath).length()
@@ -210,9 +210,9 @@ class Connection(private val client: LocalSocket) : Thread() {
 
     private fun getSignatures(packageInfo: PackageInfo): JSONArray {
         val signatures = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            packageInfo.signingInfo.apkContentsSigners
+            packageInfo.signingInfo?.apkContentsSigners.orEmpty()
         } else {
-            packageInfo.signatures
+            packageInfo.signatures.orEmpty()
         }
 
         val array = JSONArray()

@@ -15,6 +15,10 @@ android {
 
     compileSdk = 36
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     def pkgFilePath = "$rootDir/../package.json"
     def pkgFile = new File(pkgFilePath)
     def pkgJson = new groovy.json.JsonSlurper().parseText(pkgFile.text)
