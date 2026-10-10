@@ -48,6 +48,10 @@ const config = {
   },
   linux: {
     target: ['AppImage'],
+    pacman: {
+      maintainer: pkg.author,
+      compression: 'zstd',
+    },
   },
   publish: {
     provider: 'generic',
