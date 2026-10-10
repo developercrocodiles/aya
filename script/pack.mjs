@@ -1,4 +1,4 @@
-import builder, { publish } from 'electron-builder'
+import builder from 'electron-builder'
 import isMac from 'licia/isMac.js'
 import isWindows from 'licia/isWindows.js'
 
@@ -43,6 +43,9 @@ const config = {
       },
     ],
     icon: 'build/icon.icns',
+  },
+  linux: {
+    target: ['AppImage', 'pacman'],
   },
   publish: {
     provider: 'generic',
