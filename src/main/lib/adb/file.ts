@@ -384,12 +384,9 @@ async function fileShell(
     (dest && startWith(dest, '/data/data/'))
   ) {
     if (!(await isRooted(deviceId))) {
-      let segments: string[] = []
-      if (dest && startWith(dest, '/data/data/')) {
-        segments = dest.replace('/data/data/', '').split('/')
-      } else {
-        segments = path.replace('/data/data/', '').split('/')
-      }
+      const segments = (dest && startWith(dest, '/data/data/') ? dest : path)
+        .replace('/data/data/', '')
+        .split('/')
       const pkg = segments[0]
       return shell(
         deviceId,

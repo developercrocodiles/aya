@@ -18,7 +18,7 @@ jobs:
         submodules: true
     - uses: actions/setup-node@v4
       with:
-        node-version: '18.x'
+        node-version: '24.x'
     - uses: actions/setup-java@v4
       with:
         java-version: '17'
@@ -26,7 +26,9 @@ jobs:
     - uses: android-actions/setup-android@v3
       with:
         accept-android-sdk-licenses: true
-        packages: platform-tools
+        packages: |
+          platform-tools
+          platforms;android-36
     - if: startsWith(matrix.os, 'ubuntu')
       run: |
         sudo apt-get install --no-install-recommends -y icnsutils graphicsmagick squashfs-tools xz-utils

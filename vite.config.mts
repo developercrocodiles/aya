@@ -1,17 +1,13 @@
-import { defineConfig, UserConfig } from 'vite'
+import { defineConfig, type UserConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import fs from 'fs-extra'
-import { fileURLToPath } from 'url'
-import path from 'path'
-
-export const alias = {
-  common: path.resolve(__dirname, 'src/common'),
-  share: path.resolve(__dirname, 'src/share'),
-}
+import { fileURLToPath } from 'node:url'
+import path from 'node:path'
+import { alias } from './vite.alias.mts'
 
 export default defineConfig(async (): Promise<UserConfig> => {
-  const __dirname = path.dirname(fileURLToPath(import.meta.url))
-  const pkg = await fs.readJSON(path.resolve(__dirname, 'package.json'))
+  const rootDir = path.dirname(fileURLToPath(import.meta.url))
+  const pkg = await fs.readJSON(path.resolve(rootDir, 'package.json'))
   return {
     base: '',
     plugins: [react()],
@@ -26,11 +22,6 @@ export default defineConfig(async (): Promise<UserConfig> => {
     css: {
       modules: {
         localsConvention: 'camelCaseOnly',
-      },
-      preprocessorOptions: {
-        scss: {
-          api: 'modern',
-        },
       },
     },
     server: {
