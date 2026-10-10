@@ -46,7 +46,8 @@ jobs:
     - if: startsWith(matrix.os, 'ubuntu')
       name: Rebuild AppImage with latest appimagetool
       run: npm run repack:appimage
-    - uses: actions/upload-artifact@v4
+    - if: always()
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.os }}
         path: |
