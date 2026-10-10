@@ -36,7 +36,13 @@ export default defineConfig(async (): Promise<UserConfig> => {
       exclude: ['@yume-chan/pcm-player'],
     },
     resolve: {
-      alias,
+      alias: {
+        ...alias,
+        'licia/randomId': path.resolve(
+          rootDir,
+          'src/renderer/lib/liciaRandomId.ts'
+        ),
+      },
     },
   }
 })

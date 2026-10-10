@@ -48,6 +48,8 @@ const config = {
   },
   linux: {
     target: ['AppImage'],
+    category: 'Utility',
+    syncDesktopName: true,
   },
   pacman: {
     maintainer: pkg.author,

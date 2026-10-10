@@ -11,7 +11,6 @@ import startWith from 'licia/startWith'
 import contain from 'licia/contain'
 import trim from 'licia/trim'
 import each from 'licia/each'
-import uuid from 'licia/uuid'
 import { getPackages } from './package'
 import {
   IFile,
@@ -61,7 +60,7 @@ const pullFile: IpcPullFile = async function (deviceId, src, dest) {
     let tmpFilePath = ''
     if (startWith(src, '/data/data/')) {
       if (!(await isRooted(deviceId))) {
-        tmpFilePath = '/data/local/tmp/' + uuid()
+        tmpFilePath = '/data/local/tmp/' + globalThis.crypto.randomUUID()
         await shell(deviceId, `touch "${tmpFilePath}"`)
         await fileShell(deviceId, 'cp', src, tmpFilePath)
         src = tmpFilePath
@@ -71,7 +70,7 @@ const pullFile: IpcPullFile = async function (deviceId, src, dest) {
     const device = await client.getDevice(deviceId)
     const transfer = await device.pull(src)
 
-    const id = uuid()
+    const id = globalThis.crypto.randomUUID()
     window.sendTo(
       'main',
       'startTransfer',
@@ -172,14 +171,14 @@ const pushFile: IpcPushFile = async function (
     let tmpFilePath = ''
     if (startWith(dest, '/data/data/')) {
       if (!(await isRooted(deviceId))) {
-        tmpFilePath = '/data/local/tmp/' + uuid()
+        tmpFilePath = '/data/local/tmp/' + globalThis.crypto.randomUUID()
       }
     }
 
     const device = await client.getDevice(deviceId)
     const transfer = await device.push(src, tmpFilePath || dest)
 
-    const id = uuid()
+    const id = globalThis.crypto.randomUUID()
     window.sendTo(
       'main',
       'startTransfer',

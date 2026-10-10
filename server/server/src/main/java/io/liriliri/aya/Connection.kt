@@ -100,6 +100,7 @@ class Connection(private val client: LocalSocket) : Thread() {
     }
 
     @TargetApi(Build.VERSION_CODES.P)
+    @Suppress("DEPRECATION")
     private fun getPackageInfo(packageName: String): JSONObject {
         var flags = PackageManager.GET_ACTIVITIES
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -194,8 +195,9 @@ class Connection(private val client: LocalSocket) : Thread() {
         return info
     }
 
+    @Suppress("DEPRECATION")
     private fun getResources(apkPath: String): Resources {
-        val assetManager = AssetManager::class.java.newInstance() as AssetManager
+        val assetManager = AssetManager::class.java.getDeclaredConstructor().newInstance()
         val addAssetManagerMethod =
             assetManager.javaClass.getMethod("addAssetPath", String::class.java)
         addAssetManagerMethod.invoke(assetManager, apkPath)
@@ -208,6 +210,7 @@ class Connection(private val client: LocalSocket) : Thread() {
         return Resources(assetManager, displayMetrics, configuration)
     }
 
+    @Suppress("DEPRECATION")
     private fun getSignatures(packageInfo: PackageInfo): JSONArray {
         val signatures = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             packageInfo.signingInfo?.apkContentsSigners.orEmpty()
