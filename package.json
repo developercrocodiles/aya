@@ -4,6 +4,7 @@
   "appId": "io.liriliri.aya",
   "version": "1.14.2",
   "description": "Android adb desktop app",
+  "homepage": "https://aya.liriliri.io/",
   "main": "dist/main/index.js",
   "engines": {
     "node": ">=22.12.0"
